@@ -6,37 +6,36 @@ using UnityEngine;
  * When the player hits the floor, it is sent back to the respawn point.
  */
 public class Floor : MonoBehaviour
-{ 
-
+{
+    [SerializeField] protected string triggeringTag;
+    [SerializeField] float threshold = 1f;
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("enter");
-        other.gameObject.GetComponent<Mover>().isGrounded = true;
-        // var controller = other.GetComponent<CharacterController>();
-        //if (controller)
-        //   {
-        // controller.enabled = false;
-        //   }
-        //  StartCoroutine(EnableController(controller));
+        if(other.gameObject.tag == triggeringTag)
+        {
+            other.gameObject.GetComponent<Mover>().isGrounded = true;
+            if(GameManager.Instance.levelNumber == Level.Three && other.relativeVelocity.y < -1 * threshold)
+            {
+
+                other.gameObject.GetComponent<Mover>().walkForce /= 2;
+                StartCoroutine(BrokenLeg(other.gameObject.GetComponent<Mover>()));
+
+            }
+        }
+            
         
     }
     private void OnCollisionExit2D(Collision2D other)
     {
-        Debug.Log("exit");
-        other.gameObject.GetComponent<Mover>().isGrounded = false;
-        // var controller = other.GetComponent<CharacterController>();
-        //if (controller)
-        //   {
-        // controller.enabled = false;
-        //   }
-
-        //  StartCoroutine(EnableController(controller));
+        if (other.gameObject.tag == triggeringTag)
+            other.gameObject.GetComponent<Mover>().isGrounded = false;
+        
 
     }
 
-    //private IEnumerator EnableController(CharacterController controller)
-    //{
-    //    yield return new WaitForSeconds(0.5f);
-    // controller.enabled = true;
-    // }
+    private IEnumerator BrokenLeg(Mover mover)
+    {
+        yield return new WaitForSeconds(2f);
+        mover.walkForce *= 2 ;
+     }
 }

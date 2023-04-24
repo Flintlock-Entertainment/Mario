@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -36,19 +36,22 @@ public class GameManager : MonoBehaviour
 
     public void LevelOne()
     {
-        Debug.Log("one");
+        Debug.Log("level one");
+        SceneManager.LoadScene("LevelOne");
     }
     public void LevelTwo()
     {
-        Debug.Log("two");
+        Debug.Log("level two");
+        SceneManager.LoadScene("LevelTwo");
     }
     public void LevelThree()
     {
-        Debug.Log("three");
+        Debug.Log("level three");
+        SceneManager.LoadScene("LevelThree");
     }
     public void Win()
     {
-        Debug.Log("win");
+        SceneManager.LoadScene("Win");
     }
 }
 

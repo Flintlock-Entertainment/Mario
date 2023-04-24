@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KillPlayer : MonoBehaviour
 {
-    [SerializeField] string triggeringTag;
+    [SerializeField] protected string triggeringTag;
     [SerializeField] GameObject spawnPoint = null;
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
